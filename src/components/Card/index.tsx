@@ -7,6 +7,7 @@ const StyledContainer = styled.div`
   background: ${(props) => `linear-gradient(
     45deg, #181818, #380d17
   )`};
+  cursor: pointer;
 `;
 
 const Title = styled.h2`
@@ -55,18 +56,29 @@ interface ICardProps {
   title: string;
   date: any;
   description: string;
-  handleButtonClick: () => void;
+  onNext: () => void;
+  onClick: () => void;
   ref?: any;
 }
 
 export const Card = React.forwardRef<HTMLDivElement, ICardProps>(
   (props, ref) => {
+    
+    const handleClick = (
+      event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+      event.stopPropagation();
+      props.onNext();
+    };
+
     return (
-      <StyledContainer ref={ref}>
+      // <StyledContainer ref={ref}>
+      <StyledContainer ref={ref} onClick={props.onClick}>
         <Title>{props.title}</Title>
         <Date>{props.date}</Date>
         <Description>{props.description}</Description>
-        <Action onClick={props.handleButtonClick}>Continuar</Action>
+        {/* <Action onClick={props.onNext}>Continuar</Action> */}
+        <Action onClick={handleClick}>Continuar</Action>
       </StyledContainer>
     );
   }

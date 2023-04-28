@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Card } from "../Card/";
 import { v4 as uuidv4 } from "uuid";
 import { StyledRoot, StyledContainer } from "../../App.styles";
@@ -16,19 +16,40 @@ const ListView = () => {
     return description;
   };
   const cardRefs = useRef<Array<HTMLDivElement>>([]);
+  const [cardsRendered, setCardsRendered] = useState<Record<number, boolean>>({
+    0: true,
+  });
 
-  const handleButtonClick = (index: number) => {
+  const onNext = (index: number) => {
     const nextIndex = index + 1;
-
-    if (cardRefs.current[nextIndex]) {
-      cardRefs.current[nextIndex].scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "center",
+    const isCardRendered = cardsRendered[nextIndex];
+    if (isCardRendered) {
+      onClick(nextIndex);
+    } else {
+      setCardsRendered((state) => {
+        return { ...state, [nextIndex]: true };
       });
-      cardRefs.current[nextIndex].style.alignItems = "center";
-      cardRefs.current[nextIndex].style.justifyContent = "center";
     }
+  };
+
+  const onClick = (index: number) => {
+    console.log(
+      "🚀 ~ file: index.tsx:33 ~ onClick ~ cardRefs.current[index]:",
+      cardRefs.current[index]
+    );
+    if (cardRefs.current[index]) {
+      scrollToCard(cardRefs.current[index]);
+    }
+  };
+
+  const scrollToCard = (element: HTMLDivElement) => {
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
+    });
+    element.style.alignItems = "center";
+    element.style.justifyContent = "center";
   };
 
   const cardsData = [
@@ -37,42 +58,36 @@ const ListView = () => {
       title: "Formulario 1",
       date: date,
       description: getDescription(),
-      handleButtonClick: handleButtonClick,
     },
     {
       key: getID(),
       title: "Formulario 2",
       date: date,
       description: getDescription(),
-      handleButtonClick: handleButtonClick,
     },
     {
       key: getID(),
       title: "Formulario 3",
       date: date,
       description: getDescription(),
-      handleButtonClick: handleButtonClick,
     },
     {
       key: getID(),
       title: "Formulario 4",
       date: date,
       description: getDescription(),
-      handleButtonClick: handleButtonClick,
     },
     {
       key: getID(),
       title: "Formulario 5",
       date: date,
       description: getDescription(),
-      handleButtonClick: handleButtonClick,
     },
     {
       key: getID(),
       title: "Formulario 6",
       date: date,
       description: getDescription(),
-      handleButtonClick: handleButtonClick,
     },
   ];
 
@@ -80,16 +95,23 @@ const ListView = () => {
     <>
       {cardsData.map((card, index) => (
         <StyledRoot key={card.key}>
-          <StyledContainer>
-            <Card
-              ref={(el) => (cardRefs.current[index] = el as HTMLDivElement)}
-              key={card.key}
-              title={card.title}
-              date={card.date}
-              description={card.description}
-              handleButtonClick={() => handleButtonClick(index)}
-            />
-          </StyledContainer>
+          {cardsRendered[index] && (
+            <StyledContainer>
+              <Card
+                ref={(el: HTMLDivElement) => {
+                  cardRefs.current[index] = el;
+                  if (el) scrollToCard(el);
+                }}
+                // ref={(el) => (cardRefs.current[index] = el as HTMLDivElement)}
+                key={card.key}
+                title={card.title}
+                date={card.date}
+                description={card.description}
+                onNext={() => onNext(index)}
+                onClick={() => onClick(index)}
+              />
+            </StyledContainer>
+          )}
         </StyledRoot>
       ))}
     </>
