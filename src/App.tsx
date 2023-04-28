@@ -1,6 +1,8 @@
 import "@material-ui/core/styles";
 import { StyledContainer, StyledRoot } from "./App.styles";
 import ListView from "./components/ListView";
+import Wizard from "./components/Wizard/Wizard";
+import ListWizard from "./components/Wizard/ListWizard";
 // import CardList from "./components/Card/CardList";
 
 const App = () => {
@@ -8,7 +10,8 @@ const App = () => {
     <StyledRoot>
       <StyledContainer>
         {/* <CardList />; */}
-        <ListView />
+        {/* <ListView /> */}
+        <ListWizard />
       </StyledContainer>
     </StyledRoot>
   );

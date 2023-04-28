@@ -1,6 +1,6 @@
 import Wizard from "./Wizard";
 
-const App = () => {
+const ListWizard = () => {
   const steps = [
     {
       label: "Passo 1",
@@ -24,4 +24,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default ListWizard;
