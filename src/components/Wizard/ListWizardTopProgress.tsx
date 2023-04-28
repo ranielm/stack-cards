@@ -1,4 +1,4 @@
-import Wizard from "./Wizard";
+import { WizardTopProgress } from "./WizardTopProgress";
 
 const ListWizard = () => {
   const steps = [
@@ -19,7 +19,7 @@ const ListWizard = () => {
   return (
     <div>
       <h1>Wizard com Etapas Dinâmicas</h1>
-      <Wizard steps={steps} />
+      <WizardTopProgress steps={steps} />
     </div>
   );
 };

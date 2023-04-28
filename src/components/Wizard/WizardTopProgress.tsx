@@ -48,7 +48,7 @@ interface WizardProps {
   steps: WizardStep[];
 }
 
-const Wizard = ({ steps }: WizardProps) => {
+export const WizardTopProgress = ({ steps }: WizardProps) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
 
@@ -109,5 +109,3 @@ const Wizard = ({ steps }: WizardProps) => {
     </div>
   );
 };
-
-export default Wizard;
