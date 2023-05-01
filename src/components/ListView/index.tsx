@@ -26,26 +26,13 @@ const ListView = () => {
 
   const onNext = (index: number) => {
     const nextIndex = index + 1;
-    // const isCardRendered = cardsRendered[nextIndex];
-    // if (isCardRendered) {
-    //   console.log(
-    //     "🚀 ~ file: index.tsx:30 ~ onNext ~ isCardRendered:",
-    //     isCardRendered
-    //   );
-    //   onClick(nextIndex);
-    // } else {
     setCardsRendered((state) => {
       return { ...state, [nextIndex]: true };
     });
-    // setCardFocused((state) => {
-    //   return { [nextIndex]: true };
-    // });
     onClick(nextIndex);
-    // }
   };
 
   useEffect(() => {
-    console.log("🚀 ~ file: index.tsx:51 ~ ListView ~ forFocus:", forFocus);
     setCardFocused((state) => {
       return { [forFocus]: true };
     });
@@ -56,9 +43,6 @@ const ListView = () => {
     setForFocus(index);
     if (cardRefs.current[index]) {
       scrollToCard(cardRefs.current[index]);
-      // setCardFocused((state) => {
-      //   return { [index]: true };
-      // });
     }
   };
 
@@ -72,12 +56,6 @@ const ListView = () => {
       element.style.alignItems = "center";
       element.style.justifyContent = "center";
     }
-
-    // element.style.boxShadow =
-    //   "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)";
-    // setCardFocused((state) => {
-    //   return { [index]: true };
-    // });
   };
 
   const cardsData = [
@@ -128,9 +106,6 @@ const ListView = () => {
               <Card
                 ref={(el: HTMLDivElement) => {
                   cardRefs.current[index] = el;
-                  // if (el) {
-                  //   scrollToCard(el, index);
-                  // }
                 }}
                 key={card.key}
                 title={card.title}
