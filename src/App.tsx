@@ -1,5 +1,5 @@
 import "@material-ui/core/styles";
-import { StyledContainer, StyledRoot } from "./App.styles";
+import { StyledContainer } from "./App.styles";
 import ListView from "./components/ListView";
 // import Wizard from "./components/Wizard/Wizard";
 // import ListWizard from "./components/Wizard/ListWizard";
@@ -9,14 +9,12 @@ import ListView from "./components/ListView";
 
 const App = () => {
   return (
-    <StyledRoot>
-      <StyledContainer>
-        {/* <CardList />; */}
-        <ListView />
-        {/* <ListWizard /> */}
-        {/* <Wizard steps={steps} /> */}
-      </StyledContainer>
-    </StyledRoot>
+    <StyledContainer>
+      {/* <CardList />; */}
+      <ListView />
+      {/* <ListWizard /> */}
+      {/* <Wizard steps={steps} /> */}
+    </StyledContainer>
   );
 };
 

@@ -19,6 +19,9 @@ const ListView = () => {
   const [cardsRendered, setCardsRendered] = useState<Record<number, boolean>>({
     0: true,
   });
+  // const [cardFocused, setCardFocused] = useState<Record<number, boolean>>({
+  //   0: true,
+  // });
 
   const onNext = (index: number) => {
     const nextIndex = index + 1;
@@ -29,20 +32,23 @@ const ListView = () => {
       setCardsRendered((state) => {
         return { ...state, [nextIndex]: true };
       });
+      // setCardFocused((state) => {
+      //   return { [nextIndex]: true };
+      // });
     }
   };
 
   const onClick = (index: number) => {
-    console.log(
-      "🚀 ~ file: index.tsx:33 ~ onClick ~ cardRefs.current[index]:",
-      cardRefs.current[index]
-    );
     if (cardRefs.current[index]) {
-      scrollToCard(cardRefs.current[index]);
+      scrollToCard(cardRefs.current[index], index);
+      // setCardFocused((state) => {
+      //   return { [index]: true };
+      // });
     }
   };
 
-  const scrollToCard = (element: HTMLDivElement) => {
+  const scrollToCard = (element: HTMLDivElement, index: number) => {
+    console.log("🚀 ~ file: index.tsx:51 ~ scrollToCard ~ index:", index);
     element.scrollIntoView({
       behavior: "smooth",
       block: "center",
@@ -50,6 +56,8 @@ const ListView = () => {
     });
     element.style.alignItems = "center";
     element.style.justifyContent = "center";
+    // element.style.boxShadow =
+    //   "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)";
   };
 
   const cardsData = [
@@ -100,15 +108,17 @@ const ListView = () => {
               <Card
                 ref={(el: HTMLDivElement) => {
                   cardRefs.current[index] = el;
-                  if (el) scrollToCard(el);
+                  if (el) {
+                    scrollToCard(el, index);
+                  }
                 }}
-                // ref={(el) => (cardRefs.current[index] = el as HTMLDivElement)}
                 key={card.key}
                 title={card.title}
                 date={card.date}
                 description={card.description}
                 onNext={() => onNext(index)}
                 onClick={() => onClick(index)}
+                // focused={cardFocused[index]}
               />
             </StyledContainer>
           )}

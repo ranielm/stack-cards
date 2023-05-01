@@ -1,16 +1,21 @@
+import {
+  Button,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@material-ui/core";
+import { Card as CardMUI } from "@material-ui/core";
 import * as React from "react";
 import styled from "styled-components";
 
-const StyledContainer = styled.div`
-  border: ${(props) => `1px solid #1c8382`};
-  padding: 25px 12px 18px;
-  background: ${(props) => `linear-gradient(
-    45deg, #181818, #380d17
-  )`};
+export const StyledContainer = styled.div`
   cursor: pointer;
+  min-width: 275px;
+  margin-bottom: 32;
+  position: "relative";
 `;
 
-const Title = styled.h2`
+export const Title = styled.h2`
   color: #fff;
   font-weight: 300;
   @media (max-width: 500px) {
@@ -18,7 +23,7 @@ const Title = styled.h2`
   }
 `;
 
-const Date = styled.div`
+export const Date = styled.div`
   color: #ccc;
   font-weight: 300;
   margin: 6px 0;
@@ -27,7 +32,7 @@ const Date = styled.div`
   }
 `;
 
-const Description = styled.p`
+export const Description = styled.p`
   color: #fff;
   font-weight: 300;
   @media (max-width: 500px) {
@@ -35,7 +40,7 @@ const Description = styled.p`
   }
 `;
 
-const Action = styled.button`
+export const Action = styled.button`
   margin: 0 5px;
   padding: 8px 14px;
   background: rgba(155, 155, 155, 0.2);
@@ -52,8 +57,33 @@ const Action = styled.button`
   }
 `;
 
+export const StyledBullet = styled.span`
+  display: "inline-block";
+  margin: "0 2px";
+  transform: "scale(0.8)";
+`;
+
+export interface IconProps {
+  onPress: any;
+  src: any;
+  width: string;
+  height: string;
+}
+
+export const CustomTypography = styled(Typography)``;
+
+type TypographyProps = {
+  pos?: boolean;
+};
+
+const StyledTypography = styled(Typography)<TypographyProps>(({ pos }) => ({
+  fontSize: 14,
+  marginBottom: pos ? 12 : 0,
+}));
+
 interface ICardProps {
   title: string;
+  focused?: boolean;
   date: any;
   description: string;
   onNext: () => void;
@@ -63,22 +93,35 @@ interface ICardProps {
 
 export const Card = React.forwardRef<HTMLDivElement, ICardProps>(
   (props, ref) => {
-    
-    const handleClick = (
-      event: React.MouseEvent<HTMLButtonElement>
-    ) => {
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.stopPropagation();
       props.onNext();
     };
+    const bull = <StyledBullet>•</StyledBullet>;
 
     return (
-      // <StyledContainer ref={ref}>
       <StyledContainer ref={ref} onClick={props.onClick}>
-        <Title>{props.title}</Title>
-        <Date>{props.date}</Date>
-        <Description>{props.description}</Description>
-        {/* <Action onClick={props.onNext}>Continuar</Action> */}
-        <Action onClick={handleClick}>Continuar</Action>
+        <CardMUI raised={props.focused}>
+          <CardContent>
+            <StyledTypography color="textSecondary" gutterBottom>
+              {props.title}
+            </StyledTypography>
+            <StyledTypography variant="h5">{props.date}</StyledTypography>
+            <StyledTypography color="textSecondary">
+              {props.description}
+            </StyledTypography>
+            <StyledTypography variant="body2">
+              be{bull}nev{bull}o{bull}lent
+              <br />
+              {props.date}
+            </StyledTypography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={handleClick}>
+              Continuar
+            </Button>
+          </CardActions>
+        </CardMUI>
       </StyledContainer>
     );
   }

@@ -7,7 +7,7 @@ export const ListContainer = styled.div`
   width: 30rem;
 `;
 
-export const Card = styled.div`
+export const StyledCard = styled.div`
   background: #555;
   border-radius: 1rem;
   padding: 3rem 1rem;
