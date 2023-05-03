@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Card } from "../Card/";
 import { v4 as uuidv4 } from "uuid";
-import { StyledRoot, StyledContainer } from "../../App.styles";
+import { StyledRoot } from "../../App.styles";
 
 export const getID = () => {
   let id = uuidv4();
@@ -102,22 +102,20 @@ const ListView = () => {
       {cardsData.map((card, index) => (
         <StyledRoot key={card.key}>
           {cardsRendered[index] && (
-            <StyledContainer>
-              <Card
-                ref={(el: HTMLDivElement) => {
-                  cardRefs.current[index] = el;
-                }}
-                key={card.key}
-                title={card.title}
-                date={card.date}
-                description={card.description}
-                onNext={() => {
-                  onNext(index);
-                }}
-                onClick={() => onClick(index)}
-                focused={cardFocused[index]}
-              />
-            </StyledContainer>
+            <Card
+              ref={(el: HTMLDivElement) => {
+                cardRefs.current[index] = el;
+              }}
+              key={card.key}
+              title={card.title}
+              date={card.date}
+              description={card.description}
+              onNext={() => {
+                onNext(index);
+              }}
+              onClick={() => onClick(index)}
+              focused={cardFocused[index]}
+            />
           )}
         </StyledRoot>
       ))}
